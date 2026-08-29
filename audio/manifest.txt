@@ -1,0 +1,20 @@
+StadiumAInnouncer split voice pack
+
+Number Two.wav	0.735 seconds
+Number Three.wav	0.787 seconds
+Number Four.wav	0.847 seconds
+Number Five.wav	0.838 seconds
+Number Six.wav	0.839 seconds
+Number Seven.wav	0.870 seconds
+Number Eight.wav	0.680 seconds
+Number Nine.wav	0.854 seconds
+Number Ten.wav	0.808 seconds
+The Pitcher.wav	0.623 seconds
+The Catcher.wav	0.678 seconds
+The First Baseman.wav	1.015 seconds
+The Second Baseman.wav	1.071 seconds
+The Third Baseman.wav	1.051 seconds
+The Shortstop.wav	0.784 seconds
+The Center Fielder.wav	1.013 seconds
+The Right Fielder.wav	0.939 seconds
+The Designated Hitter.wav	1.306 seconds
