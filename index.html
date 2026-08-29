@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>StadiumAInnouncer</title>
 
@@ -14,8 +14,8 @@
       --border: #2c3d55;
       --text: #f5f7fb;
       --muted: #9cabbd;
-      --accent: #26d07c;
-      --accent2: #31e18b;
+      --accent: #32d583;
+      --accent-hover: #45e596;
       --danger: #ff5d68;
     }
 
@@ -31,87 +31,129 @@
     }
 
     .app {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 18px;
+      padding: 20px;
     }
 
     .header,
-    .panel {
+    .card {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 18px;
-      margin-bottom: 16px;
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 18px;
     }
 
-    h1,
-    h2,
-    h3 {
-      margin-top: 0;
+    .header {
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 8px 0 0;
+      font-size: clamp(34px, 7vw, 56px);
     }
 
     .ai {
       color: var(--accent);
     }
 
-    .muted {
+    .tagline {
+      margin-top: 8px;
       color: var(--muted);
     }
 
     .player-card {
       text-align: center;
-      padding: 24px 16px;
     }
 
-    .label {
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 12px;
-      font-weight: 700;
+    .current-label {
       color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
     }
 
     .number {
-      font-size: 72px;
-      font-weight: 900;
       margin-top: 10px;
+      font-size: clamp(64px, 15vw, 110px);
+      font-weight: 900;
+      line-height: 1;
     }
 
     .name {
-      font-size: 38px;
+      margin-top: 8px;
+      font-size: clamp(34px, 8vw, 58px);
       font-weight: 900;
-      margin-top: 5px;
     }
 
     .position {
       margin-top: 10px;
       color: var(--muted);
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
       text-transform: uppercase;
+    }
+
+    .sequence {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      margin-top: 30px;
+    }
+
+    .chip {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 20px;
     }
 
     button {
       border: none;
       border-radius: 14px;
-      min-height: 48px;
+      min-height: 50px;
       padding: 12px 18px;
       font-size: 16px;
       font-weight: 800;
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.55;
+      cursor: default;
+    }
+
     .announce {
       width: 100%;
-      margin-top: 24px;
-      min-height: 74px;
-      font-size: 24px;
+      min-height: 82px;
+      margin-top: 30px;
       background: var(--accent);
       color: #04150d;
+      font-size: 28px;
+      font-weight: 900;
     }
 
     .announce:hover {
-      background: var(--accent2);
+      background: var(--accent-hover);
     }
 
     .secondary {
@@ -121,53 +163,36 @@
     }
 
     .danger {
-      background: transparent;
+      width: 100%;
+      margin-top: 12px;
       color: var(--danger);
+      background: transparent;
       border: 1px solid var(--danger);
     }
 
     .row {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .row button {
-      flex: 1;
-    }
-
-    .sequence {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 18px;
-    }
-
-    .chip {
-      padding: 8px 12px;
-      background: var(--panel2);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
     }
 
     .status {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 12px;
+      margin-top: 18px;
+      padding: 14px;
       background: var(--panel2);
+      border-radius: 13px;
       color: var(--muted);
-      display: none;
+      min-height: 48px;
     }
 
-    .status.show {
-      display: block;
+    .status.error {
+      color: var(--danger);
     }
 
     .history-item {
+      padding: 12px 0;
       border-bottom: 1px solid var(--border);
-      padding: 10px 0;
     }
 
     .history-item:last-child {
@@ -175,77 +200,147 @@
     }
 
     .history-time {
-      font-size: 12px;
       color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 4px;
     }
 
     @media (max-width: 600px) {
-      .number {
-        font-size: 56px;
-      }
-
-      .name {
-        font-size: 30px;
-      }
-
       .row {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+      }
+
+      .app {
+        padding: 12px;
+      }
+
+      .header,
+      .card {
+        padding: 18px;
+      }
+
+      .chip {
+        font-size: 13px;
       }
     }
   </style>
 </head>
 
 <body>
+
   <main class="app">
+
     <section class="header">
-      <div class="label">The AI Voice of the Game</div>
-      <h1>Stadium<span class="ai">AI</span>nnouncer</h1>
-      <p class="muted">
-        Modular WAV announcer prototype
-      </p>
+      <div class="eyebrow">The AI Voice of the Game</div>
+
+      <h1>
+        Stadium<span class="ai">AI</span>nnouncer
+      </h1>
+
+      <div class="tagline">
+        Modular WAV Baseball Announcer
+      </div>
     </section>
 
-    <section class="panel player-card">
-      <div class="label">Current Batter</div>
 
-      <div id="number" class="number">#1</div>
-      <div id="name" class="name">John Smith</div>
-      <div id="position" class="position">Left Fielder</div>
+    <section class="card player-card">
 
-      <div id="sequence" class="sequence"></div>
+      <div class="current-label">
+        Current Batter
+      </div>
 
-      <button id="announce" class="announce">
+      <div id="playerNumber" class="number">
+        #1
+      </div>
+
+      <div id="playerName" class="name">
+        John Smith
+      </div>
+
+      <div id="playerPosition" class="position">
+        Left Fielder
+      </div>
+
+
+      <div id="sequence" class="sequence">
+      </div>
+
+
+      <button id="announceButton" class="announce" type="button">
         ANNOUNCE
       </button>
 
+
       <div class="row">
-        <button id="previous" class="secondary">
+
+        <button id="previousButton" class="secondary" type="button">
           ← Previous
         </button>
 
-        <button id="next" class="secondary">
+        <button id="nextButton" class="secondary" type="button">
           Next Batter →
         </button>
+
       </div>
 
-      <button
-        id="stop"
-        class="danger"
-        style="width:100%; margin-top:12px;"
-      >
+
+      <button id="stopButton" class="danger" type="button">
         STOP AUDIO
       </button>
 
-      <div id="status" class="status"></div>
+
+      <div id="status" class="status">
+        Ready
+      </div>
+
     </section>
 
-    <section class="panel">
+
+    <section class="card">
+
       <h2>Announcement History</h2>
-      <div id="history" class="muted">
-        No announcements yet.
+
+      <div id="history">
+        <div style="color:#9cabbd;">
+          No announcements yet.
+        </div>
       </div>
+
     </section>
+
   </main>
+
+
+  <audio
+    id="phraseAudio"
+    preload="auto"
+    src="audio/phrases/Now Batting For.wav">
+  </audio>
+
+  <audio
+    id="teamAudio"
+    preload="auto"
+    src="audio/teams/McGill University.wav">
+  </audio>
+
+  <audio
+    id="numberOneAudio"
+    preload="auto"
+    src="audio/numbers/Number One.wav">
+  </audio>
+
+  <audio
+    id="leftFielderAudio"
+    preload="auto"
+    src="audio/positions/Left Fielder.wav">
+  </audio>
+
+  <audio
+    id="johnSmithAudio"
+    preload="auto"
+    src="audio/players/John Smith.wav">
+  </audio>
+
 
   <script>
     const players = [
@@ -254,23 +349,24 @@
         name: "John Smith",
         position: "Left Fielder",
 
-        clips: [
-          "audio/phrases/Now Batting For.wav",
-          "audio/teams/McGill University.wav",
-          "audio/numbers/Number One.wav",
-          "audio/positions/The Left Fielder.wav",
-          "audio/players/John Smith.wav"
-        ],
-
         labels: [
           "Now batting for",
           "McGill University",
           "Number One",
-          "The Left Fielder",
+          "Left Fielder",
           "John Smith"
+        ],
+
+        audioIds: [
+          "phraseAudio",
+          "teamAudio",
+          "numberOneAudio",
+          "leftFielderAudio",
+          "johnSmithAudio"
         ]
       }
     ];
+
 
     const pauses = [
       55,
@@ -279,174 +375,333 @@
       95
     ];
 
+
     let currentIndex = 0;
-    let audioContext = null;
-    let activeSources = [];
+    let playing = false;
     let history = [];
+    let stopRequested = false;
 
-    const bufferCache = new Map();
 
-    const numberElement = document.getElementById("number");
-    const nameElement = document.getElementById("name");
-    const positionElement = document.getElementById("position");
-    const sequenceElement = document.getElementById("sequence");
-    const statusElement = document.getElementById("status");
-    const historyElement = document.getElementById("history");
+    const playerNumber =
+      document.getElementById("playerNumber");
 
-    function showStatus(message) {
-      statusElement.textContent = message;
-      statusElement.classList.add("show");
+    const playerName =
+      document.getElementById("playerName");
 
-      clearTimeout(showStatus.timer);
+    const playerPosition =
+      document.getElementById("playerPosition");
 
-      showStatus.timer = setTimeout(() => {
-        statusElement.classList.remove("show");
-      }, 3500);
+    const sequence =
+      document.getElementById("sequence");
+
+    const announceButton =
+      document.getElementById("announceButton");
+
+    const previousButton =
+      document.getElementById("previousButton");
+
+    const nextButton =
+      document.getElementById("nextButton");
+
+    const stopButton =
+      document.getElementById("stopButton");
+
+    const status =
+      document.getElementById("status");
+
+    const historyElement =
+      document.getElementById("history");
+
+
+    function wait(milliseconds) {
+      return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+      });
     }
 
-    function getAudioContext() {
-      if (!audioContext) {
-        const AudioContextClass =
-          window.AudioContext ||
-          window.webkitAudioContext;
 
-        audioContext = new AudioContextClass();
-      }
-
-      return audioContext;
+    function setStatus(message, isError = false) {
+      status.textContent = message;
+      status.classList.toggle("error", isError);
     }
 
-    async function loadBuffer(url) {
-      if (bufferCache.has(url)) {
-        return bufferCache.get(url);
-      }
 
-      const response = await fetch(
-        encodeURI(url)
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          "Could not load: " + url
-        );
-      }
-
-      const arrayBuffer =
-        await response.arrayBuffer();
-
-      const context = getAudioContext();
-
-      const audioBuffer =
-        await context.decodeAudioData(
-          arrayBuffer
-        );
-
-      bufferCache.set(
-        url,
-        audioBuffer
-      );
-
-      return audioBuffer;
+    function getCurrentPlayer() {
+      return players[currentIndex];
     }
 
-    function stopAudio() {
-      activeSources.forEach(source => {
-        try {
-          source.stop();
-        } catch (error) {}
+
+    function stopAllAudio() {
+
+      stopRequested = true;
+
+      players.forEach(player => {
+
+        player.audioIds.forEach(id => {
+
+          const audio =
+            document.getElementById(id);
+
+          if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+          }
+
+        });
+
       });
 
-      activeSources = [];
+      playing = false;
+      announceButton.disabled = false;
+
+      setStatus("Stopped");
     }
 
-    async function playAnnouncement() {
-      const player =
-        players[currentIndex];
 
-      if (!player) {
-        return;
-      }
+    function playAudio(audio) {
 
-      stopAudio();
+      return new Promise((resolve, reject) => {
 
-      try {
-        const context =
-          getAudioContext();
+        audio.currentTime = 0;
 
-        if (
-          context.state ===
-          "suspended"
-        ) {
-          await context.resume();
-        }
 
-        showStatus(
-          "Loading announcement..."
-        );
+        const handleEnded = () => {
 
-        const buffers =
-          await Promise.all(
-            player.clips.map(
-              clip =>
-                loadBuffer(clip)
+          cleanup();
+
+          resolve();
+
+        };
+
+
+        const handleError = () => {
+
+          cleanup();
+
+          reject(
+            new Error(
+              "Could not load: " +
+              decodeURIComponent(
+                audio.getAttribute("src")
+              )
             )
           );
 
-        let startTime =
-          context.currentTime +
-          0.06;
+        };
 
-        buffers.forEach(
-          (buffer, index) => {
-            const source =
-              context.createBufferSource();
 
-            source.buffer =
-              buffer;
+        function cleanup() {
 
-            source.connect(
-              context.destination
-            );
+          audio.removeEventListener(
+            "ended",
+            handleEnded
+          );
 
-            source.start(
-              startTime
-            );
+          audio.removeEventListener(
+            "error",
+            handleError
+          );
 
-            activeSources.push(
-              source
-            );
+        }
 
-            startTime +=
-              buffer.duration;
 
-            if (
-              index <
-              pauses.length
-            ) {
-              startTime +=
-                pauses[index] /
-                1000;
-            }
-          }
+        audio.addEventListener(
+          "ended",
+          handleEnded
         );
 
-        showStatus(
-          "Playing announcement"
+        audio.addEventListener(
+          "error",
+          handleError
         );
 
-        addHistory(player);
 
-      } catch (error) {
-        console.error(error);
+        const result =
+          audio.play();
 
-        showStatus(
-          error.message
-        );
-      }
+
+        if (
+          result &&
+          typeof result.catch === "function"
+        ) {
+
+          result.catch(error => {
+
+            cleanup();
+
+            reject(error);
+
+          });
+
+        }
+
+      });
+
     }
 
+
+    async function announceCurrentPlayer() {
+
+      if (playing) {
+        return;
+      }
+
+
+      const player =
+        getCurrentPlayer();
+
+
+      playing = true;
+
+      stopRequested = false;
+
+      announceButton.disabled = true;
+
+      setStatus("Announcing...");
+
+
+      try {
+
+        for (
+          let index = 0;
+          index < player.audioIds.length;
+          index++
+        ) {
+
+          if (stopRequested) {
+            return;
+          }
+
+
+          const audio =
+            document.getElementById(
+              player.audioIds[index]
+            );
+
+
+          if (!audio) {
+
+            throw new Error(
+              "Audio element missing."
+            );
+
+          }
+
+
+          await playAudio(audio);
+
+
+          if (
+            index < pauses.length &&
+            !stopRequested
+          ) {
+
+            await wait(
+              pauses[index]
+            );
+
+          }
+
+        }
+
+
+        if (!stopRequested) {
+
+          setStatus("Ready");
+
+          addHistory(player);
+
+        }
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        setStatus(
+          error.message ||
+          "Audio could not be played.",
+          true
+        );
+
+      }
+
+      finally {
+
+        playing = false;
+
+        announceButton.disabled = false;
+
+      }
+
+    }
+
+
+    function renderPlayer() {
+
+      const player =
+        getCurrentPlayer();
+
+
+      playerNumber.textContent =
+        "#" + player.number;
+
+      playerName.textContent =
+        player.name;
+
+      playerPosition.textContent =
+        player.position;
+
+
+      sequence.innerHTML = "";
+
+
+      player.labels.forEach(
+        (label, index) => {
+
+          const chip =
+            document.createElement("span");
+
+          chip.className =
+            "chip";
+
+          chip.textContent =
+            label;
+
+          sequence.appendChild(chip);
+
+
+          if (
+            index <
+            player.labels.length - 1
+          ) {
+
+            const arrow =
+              document.createElement("span");
+
+            arrow.className =
+              "arrow";
+
+            arrow.textContent =
+              "→";
+
+            sequence.appendChild(
+              arrow
+            );
+
+          }
+
+        }
+      );
+
+    }
+
+
     function addHistory(player) {
+
       history.unshift({
+
         time:
           new Date()
             .toLocaleTimeString(
@@ -460,187 +715,131 @@
         text:
           "Now batting for McGill University, number " +
           player.number +
-          ", the " +
+          ", " +
           player.position +
           ", " +
           player.name
+
       });
 
+
+      history =
+        history.slice(0, 20);
+
+
       renderHistory();
+
     }
+
 
     function renderHistory() {
+
       if (!history.length) {
-        historyElement.textContent =
-          "No announcements yet.";
+
+        historyElement.innerHTML =
+          '<div style="color:#9cabbd;">No announcements yet.</div>';
 
         return;
+
       }
+
 
       historyElement.innerHTML =
-        history.map(item => `
-          <div class="history-item">
-            <div class="history-time">
-              ${item.time}
-            </div>
+        history.map(item => {
 
-            <div>
-              ${item.text}
+          return `
+            <div class="history-item">
+
+              <div class="history-time">
+                ${item.time}
+              </div>
+
+              <div>
+                ${item.text}
+              </div>
+
             </div>
-          </div>
-        `).join("");
+          `;
+
+        }).join("");
+
     }
 
-    function renderPlayer() {
-      const player =
-        players[currentIndex];
 
-      numberElement.textContent =
-        "#" + player.number;
+    function goPrevious() {
 
-      nameElement.textContent =
-        player.name;
+      stopAllAudio();
 
-      positionElement.textContent =
-        player.position;
+      currentIndex--;
 
-      sequenceElement.innerHTML =
-        "";
 
-      player.labels.forEach(
-        (label, index) => {
+      if (currentIndex < 0) {
 
-          const chip =
-            document.createElement(
-              "span"
-            );
+        currentIndex =
+          players.length - 1;
 
-          chip.className =
-            "chip";
-
-          chip.textContent =
-            label;
-
-          sequenceElement.appendChild(
-            chip
-          );
-
-          if (
-            index <
-            player.labels.length -
-            1
-          ) {
-
-            const arrow =
-              document.createElement(
-                "span"
-              );
-
-            arrow.textContent =
-              "→";
-
-            sequenceElement.appendChild(
-              arrow
-            );
-          }
-        }
-      );
-    }
-
-    async function preloadPlayer() {
-      const player =
-        players[currentIndex];
-
-      try {
-        await Promise.all(
-          player.clips.map(
-            clip =>
-              loadBuffer(clip)
-          )
-        );
-
-        showStatus(
-          "Audio ready"
-        );
-
-      } catch (error) {
-        console.error(error);
-
-        showStatus(
-          "Some WAV files are missing"
-        );
       }
+
+
+      renderPlayer();
+
+      setStatus("Ready");
+
     }
 
-    document
-      .getElementById(
-        "announce"
-      )
-      .addEventListener(
-        "click",
-        playAnnouncement
-      );
 
-    document
-      .getElementById(
-        "stop"
-      )
-      .addEventListener(
-        "click",
-        stopAudio
-      );
+    function goNext() {
 
-    document
-      .getElementById(
-        "previous"
-      )
-      .addEventListener(
-        "click",
-        () => {
+      stopAllAudio();
 
-          currentIndex--;
+      currentIndex++;
 
-          if (
-            currentIndex < 0
-          ) {
-            currentIndex =
-              players.length -
-              1;
-          }
 
-          renderPlayer();
-          preloadPlayer();
-        }
-      );
+      if (
+        currentIndex >=
+        players.length
+      ) {
 
-    document
-      .getElementById(
-        "next"
-      )
-      .addEventListener(
-        "click",
-        () => {
+        currentIndex = 0;
 
-          currentIndex++;
+      }
 
-          if (
-            currentIndex >=
-            players.length
-          ) {
-            currentIndex = 0;
-          }
 
-          renderPlayer();
-          preloadPlayer();
-        }
-      );
+      renderPlayer();
+
+      setStatus("Ready");
+
+    }
+
+
+    announceButton.addEventListener(
+      "click",
+      announceCurrentPlayer
+    );
+
+
+    stopButton.addEventListener(
+      "click",
+      stopAllAudio
+    );
+
+
+    previousButton.addEventListener(
+      "click",
+      goPrevious
+    );
+
+
+    nextButton.addEventListener(
+      "click",
+      goNext
+    );
+
 
     renderPlayer();
+    renderHistory();
 
-    window.addEventListener(
-      "load",
-      preloadPlayer
-    );
   </script>
+
 </body>
 </html>
