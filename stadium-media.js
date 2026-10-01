@@ -7,7 +7,7 @@ window.StadiumMedia=(()=>{
  function revision(){try{return localStorage.getItem('stadium.audio.revision')||'0';}catch(e){return '0';}}
  function changed(){try{localStorage.setItem('stadium.audio.revision',Date.now()+'-'+crypto.randomUUID());}catch(e){}}
  async function list(){return (await request('readonly',s=>s.getAll())).sort((a,b)=>a.name.localeCompare(b.name));}
- async function add(file,kind){if(file.size>50*1024*1024)throw Error(file.name+': maximum size is 50 MB.');if(!/\.(mp3|wav|m4a|aac|ogg|flac)$/i.test(file.name))throw Error('Choose an MP3, WAV, M4A, AAC, OGG, or FLAC file.');const track={id:crypto.randomUUID(),name:file.name.replace(/\.[^.]+$/,''),kind:kind==='effect'?'effect':'music',blob:file,created:Date.now()};await request('readwrite',s=>s.put(track));changed();return track;}
+ async function add(file,kind){if(file.size>50*1024*1024)throw Error(file.name+': maximum size is 50 MB.');if(!/\.(mp3|wav|m4a|aac|ogg|flac)$/i.test(file.name))throw Error('Choose an MP3, WAV, M4A, AAC, OGG, or FLAC file.');const track={id:crypto.randomUUID(),name:file.name.replace(/\.[^.]+$/,''),kind:['effect','voice'].includes(kind)?kind:'music',blob:file,created:Date.now()};await request('readwrite',s=>s.put(track));changed();return track;}
  async function remove(id){await request('readwrite',s=>s.delete(id));decoded.delete(id);changed();}
  async function samples(id){if(decoded.has(id))return decoded.get(id);const track=await request('readonly',s=>s.get(id));if(!track)throw Error('An assigned music file is missing. Reassign it in the roster.');const Decoder=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!Decoder)throw Error('Walk-up music decoding is unavailable in this browser.');const ctx=new Decoder(1,1,48000);let buffer;try{buffer=await ctx.decodeAudioData(await track.blob.arrayBuffer());}catch(e){throw Error('Could not decode '+track.name+'. Try an MP3 or PCM WAV file.');}
  // Walk-ups use the opening of each file. Keep at most four 30-second excerpts.
@@ -15,5 +15,6 @@ window.StadiumMedia=(()=>{
  async function mix(result,plan,starts){if(!plan.enabled||!plan.ids.some(Boolean))return;const v=new DataView(result.bytes),total=(result.bytes.byteLength-44)/2;
  for(let p=0;p<plan.ids.length;p++){if(!plan.ids[p])continue;const song=await samples(plan.ids[p]);const begin=Math.round(starts[p]*48000),end=p+1<starts.length?Math.round(starts[p+1]*48000):total;for(let i=begin;i<end;i++){const local=i-begin,fade=Math.min(1,local/3840,(end-i-1)/3840),voice=v.getInt16(44+i*2,true)/32768,music=song[local%song.length]*plan.volume*Math.max(0,fade);const value=Math.max(-1,Math.min(1,voice*.90+music));v.setInt16(44+i*2,Math.round(value*(value<0?32768:32767)),true);}}
  }
- return {list,add,remove,revision,mix};
+ async function getBlob(id){const t=await request('readonly',s=>s.get(id));if(!t)throw Error('Local voice clip missing. Upload it again on this device.');return t.blob;}
+ return {list,add,remove,revision,mix,getBlob};
 })();
